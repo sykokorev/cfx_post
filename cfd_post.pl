@@ -1,3 +1,7 @@
+
+> turbo init
+> turbo more_vars
+#!/usr/bin/perl
 ! use Cwd;
 
 # Declare variables
@@ -44,9 +48,32 @@
 !     my @outlet = split(/,/, $outlet);
 !     $outlet_list{$dmn} = [@outlet];
 !   }
-!
-!   my $in = $init_rows{1};
-!   my $out = $init_rows{%init_rows};
-!   print "$in -> $out\n";
-!
+!   open ($int, '>', $int_file);
+!   foreach my $num (sort keys (%init_rows))
+!   {
+!      $dmn = $init_rows{$num};
+!       my $ptotw_in;
+!       my  $ptotw_out;
+!       my $ptot_in;
+!       my $ptot_out;
+!       my ($ttotw_in, $ttotw_out, $ttot_in, $ttot_out) = (0)*4;
+!       foreach $in (@{$inlet_list{$dmn}})
+!       {
+!          $ptotw_in = massFlowAve("Total Pressure in Rel Frame", "$in");
+!          $ptot_in = massFlowAve("Total Pressure in Stn Frame", "$in");
+!          $ttotw_in = massFlowAve("Total Temperature in Rel Frame", "$in");
+!          $ttot_in = massFlowAve("Total Temperature in Stn Frame", "$in");
+!        }
+!        foreach $out (@{$outlet_list{$dmn}})
+!       {
+!          $ptotw_out = massFlowAve("Total Pressure in Rel Frame", "$out");
+!          $ptot_out = massFlowAve("Total Pressure in Stn Frame", "$out");
+!          print "$out - $ptot_out \n";
+!          $ttotw_out = massFlowAve("Total Temperature in Rel Frame", "$out");
+!          $ttot_out = massFlowAve("Total Temperature in Stn Frame", "$out");
+!        }
+!     my $pr = $ptot_out / $ptot_in;
+!     print "$dmn PR = $pr \n";
+!   }
+!   close $int;
 ! }
